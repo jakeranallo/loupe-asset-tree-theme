@@ -1,1 +1,1 @@
-# Loupe Definition Tree Theme
+# Loupe Asset Tree Theme
