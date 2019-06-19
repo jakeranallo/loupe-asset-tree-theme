@@ -11,6 +11,7 @@ class App extends Component {
       treeData: [
         {
           title: 'Departments',
+          subtitle: 'Department',
           children: [
             {
               title: 'Categories',
@@ -59,7 +60,8 @@ class App extends Component {
             treeData={treeData}
             onChange={this.updateTreeData}
             canDrag={({ node }) => !node.dragDisabled}
-            generateNodeProps={() => ({
+            // rowHeight={({ node }) => (node.expanded ? 500 : 62)}
+            generateNodeProps={({ node }) => ({
               buttons: [
                 <button
                   style={{
@@ -73,8 +75,19 @@ class App extends Component {
                     fontWeight: 100
                   }}
                 >
-                  i
+                  {node.title.length * 10}
                 </button>
+              ],
+              content: [
+                <div
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    backgroundColor: 'red'
+                  }}
+                >
+                  hi
+                </div>
               ]
             })}
           />

@@ -11,7 +11,6 @@ function isDescendant(older, younger) {
     )
   )
 }
-
 // eslint-disable-next-line react/prefer-stateless-function
 class CustomThemeNodeContentRenderer extends Component {
   render() {
@@ -33,6 +32,7 @@ class CustomThemeNodeContentRenderer extends Component {
       isSearchFocus,
       icons,
       buttons,
+      content,
       className,
       style,
       didDrop,
@@ -74,12 +74,7 @@ class CustomThemeNodeContentRenderer extends Component {
           }
         >
           <div className={styles.rowLabel}>
-            <span
-              className={
-                styles.rowTitle +
-                (node.subtitle ? ` ${styles.rowTitleWithSubtitle}` : '')
-              }
-            >
+            <span className={styles.rowTitle}>
               {typeof nodeTitle === 'function'
                 ? nodeTitle({
                     node,
@@ -88,31 +83,45 @@ class CustomThemeNodeContentRenderer extends Component {
                   })
                 : nodeTitle}
             </span>
-
-            {nodeSubtitle && (
-              <span className={styles.rowSubtitle}>
-                {typeof nodeSubtitle === 'function'
-                  ? nodeSubtitle({
-                      node,
-                      path,
-                      treeIndex
-                    })
-                  : nodeSubtitle}
-              </span>
-            )}
-          </div>
-
-          <div className={styles.rowToolbar}>
-            {buttons.map((btn, index) => (
-              <div
-                key={index} // eslint-disable-line react/no-array-index-key
-                className={styles.toolbarButton}
-              >
-                {btn}
+            <div className={styles.rightContainer}>
+              <div className={styles.rowToolbar}>
+                {buttons.map((btn, index) => (
+                  <div
+                    key={index} // eslint-disable-line react/no-array-index-key
+                    className={styles.toolbarButton}
+                  >
+                    {btn}
+                  </div>
+                ))}
               </div>
-            ))}
+              {nodeSubtitle && (
+                <span className={styles.rowSubtitle}>
+                  {typeof nodeSubtitle === 'function'
+                    ? nodeSubtitle({
+                        node,
+                        path,
+                        treeIndex
+                      })
+                    : nodeSubtitle}
+                </span>
+              )}
+            </div>
           </div>
+
+          <button
+            className={styles.hiddenButton}
+            onClick={() =>
+              toggleChildrenVisibility({
+                node,
+                path,
+                treeIndex
+              })
+            }
+          />
         </div>
+        {node.expanded && (
+          <div className={styles.content}>{this.props.content}</div>
+        )}
       </div>
     )
 
@@ -149,8 +158,10 @@ class CustomThemeNodeContentRenderer extends Component {
 
         <div
           className={
-            styles.rowWrapper +
-            (!canDrag ? ` ${styles.rowWrapperDragDisabled}` : '')
+            node.expanded
+              ? styles.rowWrapperExpanded
+              : styles.rowWrapper +
+                (!canDrag ? ` ${styles.rowWrapperDragDisabled}` : '')
           }
         >
           {canDrag
@@ -164,6 +175,7 @@ class CustomThemeNodeContentRenderer extends Component {
 
 CustomThemeNodeContentRenderer.defaultProps = {
   buttons: [],
+  content: [],
   canDrag: false,
   canDrop: false,
   className: '',
@@ -183,6 +195,7 @@ CustomThemeNodeContentRenderer.defaultProps = {
 
 CustomThemeNodeContentRenderer.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.node),
+  content: PropTypes.arrayOf(PropTypes.node),
   canDrag: PropTypes.bool,
   className: PropTypes.string,
   icons: PropTypes.arrayOf(PropTypes.node),
