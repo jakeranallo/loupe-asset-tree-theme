@@ -113,11 +113,13 @@
   height: 62px;
   border: 0px;
   border-bottom: 1px solid #1C212C;
-  padding: 14px 14px 14px 0px;
+  // padding: 14px 14px 14px 0px;
+  padding-right: 24px;
   left: 24px;
   flex: 1 0 auto;
   display: flex;
   align-items: center;
+  flex-direction: row;
   justify-content: space-between;
   font: 400 18px/0px "Proxima Nova";
 }
@@ -241,7 +243,7 @@
   position: absolute;
   right: 24px;
   z-index: 100;
-  margin: -8px;
+  top: 22px;
 }
 
 
@@ -311,6 +313,7 @@
 };
 
 .hiddenButton {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;

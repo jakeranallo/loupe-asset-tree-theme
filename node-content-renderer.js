@@ -83,28 +83,28 @@ class CustomThemeNodeContentRenderer extends Component {
                   })
                 : nodeTitle}
             </span>
-            <div className={styles.rightContainer}>
-              <div className={styles.rowToolbar}>
-                {buttons.map((btn, index) => (
-                  <div
-                    key={index} // eslint-disable-line react/no-array-index-key
-                    className={styles.toolbarButton}
-                  >
-                    {btn}
-                  </div>
-                ))}
-              </div>
-              {nodeSubtitle && (
-                <span className={styles.rowSubtitle}>
-                  {typeof nodeSubtitle === 'function'
-                    ? nodeSubtitle({
-                        node,
-                        path,
-                        treeIndex
-                      })
-                    : nodeSubtitle}
-                </span>
-              )}
+            {nodeSubtitle && (
+              <span className={styles.rowSubtitle}>
+                {typeof nodeSubtitle === 'function'
+                  ? nodeSubtitle({
+                      node,
+                      path,
+                      treeIndex
+                    })
+                  : nodeSubtitle}
+              </span>
+            )}
+          </div>
+          <div className={styles.rightContainer}>
+            <div className={styles.rowToolbar}>
+              {buttons.map((btn, index) => (
+                <div
+                  key={index} // eslint-disable-line react/no-array-index-key
+                  className={styles.toolbarButton}
+                >
+                  {btn}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -126,7 +126,7 @@ class CustomThemeNodeContentRenderer extends Component {
     )
 
     return (
-      <div style={{ height: '100%' }} {...otherProps}>
+      <div style={{ height: 'auto' }} {...otherProps}>
         {toggleChildrenVisibility &&
           node.children &&
           (node.children.length > 0 || typeof node.children === 'function') && (
